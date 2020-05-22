@@ -32,6 +32,8 @@ class ColorPicker extends UiElement {
         this.ligSld = new Slider(0, 1, values==null ? 0.5 : values[2], x, y + height*2 + margins*2, width, height, null, "L", false, 0, action);
         for(let i = 0; i < nempty; i++)
             tmp = new UiElement();
+
+        this.forceDraw = true;
     }
 
     /**

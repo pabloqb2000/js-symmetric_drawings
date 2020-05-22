@@ -23,6 +23,7 @@ class UiElement{
 
         this.highlighted = false;
         this.visible = visible;
+        this.forceDraw = false;
 
         UI.addElement(this);
     }
