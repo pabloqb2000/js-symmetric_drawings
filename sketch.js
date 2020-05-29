@@ -14,7 +14,7 @@ function setup() {
 	// Create UI elements
 	nSymmetriesSld = new Slider(start=0, end=24, value=6, 0, 0, width/12, height/40, 1, "Symmetries", true, 0);
 	thicknessSld = new Slider(start=1, end=40, value=3, 0, 0, width/12, height/40, null, "Thickness");
-	colorPicker = new ColorPicker(0,0, width/12, height/40);
+	colorPicker = new ColorPicker(0,0, width/12, height/20, null, "Color");
 	onlyRotateBtn = new ToggleButton(0,0, width/8, height/20, "Only rotate", null, false);
 	clearBtn = new Button(0,0, width/8, height/20, "Clear", clearFrame);
 

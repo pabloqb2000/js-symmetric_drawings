@@ -30,8 +30,7 @@ class UI{
             if(e.visible) {
                 let col = this.distributed % this.tableWidth;
                 let row = floor(this.distributed / this.tableWidth);
-                e.x = colWidth*col + this.widthMargin;
-                e.y = rowHeight*row + this.heightMargin;
+                e.setPos(colWidth*col + this.widthMargin, rowHeight*row + this.heightMargin);
                 this.distributed += 1;
             }
         }    
@@ -74,7 +73,7 @@ class UI{
      */
     static draw() {
         for (let e of this.elements){
-            if(e.visible || e.forceDraw)
+            if(e.visible)
                 e.draw();
         }
     }

@@ -12,49 +12,91 @@ class ColorPicker extends UiElement {
      * @param y Y position of the secon slider
      * @param width Width of the sliders
      * @param height Height of the sliders
-     * @param margins Margin between the sliders
-     * @param values Default values
+     * @param color Default color
      * @param action Action perfomed when color changes
      */
-    constructor(x=20, y=20, width=100, height=10, margins=20, nempty=0, values=null, action=null) {
-        super(x,y,width,height, false, false, false);
-        this.margins = margins;
+    constructor(x=20, y=20, width=100, height=10, color=null, text="", action=null) {
+        super(x,y,width,height, false, true);
+        this.text = text;
+        this.action = action;
 
-        let tmp;
-        this.hueSld = new Slider(0, 1, values==null ? 0.5 : values[0], x, y, width, height, null, "H", false, 0, action);
-        for(let i = 0; i < nempty; i++)
-            tmp = new UiElement();
+        this.configInput(color);
+    }
 
-        this.satSld = new Slider(0, 1, values==null ? 0.5 : values[1], x, y + height + margins, width, height, null, "S", false, 0, action);
-        for(let i = 0; i < nempty; i++)
-            tmp = new UiElement();
+    /**
+     * Create a color input element
+     * and hide it
+     * 
+     * @param color default color of the input (in hex)
+     */
+    configInput(color) {
+        // Create and configure input
+        this.input = document.createElement("input");
+        this.input.setAttribute("type", "color");
+        this.input.setAttribute("tabindex", "-1");
 
-        this.ligSld = new Slider(0, 1, values==null ? 0.5 : values[2], x, y + height*2 + margins*2, width, height, null, "L", false, 0, action);
-        for(let i = 0; i < nempty; i++)
-            tmp = new UiElement();
+        this.input.value = color==null ? "#B7E2F0" : color;        
+        this.input.style.visibility = "hidden";
+        this.input.style.position = "absolute";
+        this.input.style.left = this.x.toString() + "px";
+        this.input.style.top = this.y.toString() + "px";
+        this.input.style.height = (this.height-4).toString() + "px";
 
-        this.forceDraw = true;
+        document.body.appendChild(this.input);
+    }
+
+    /**
+     * Sets the new position of the element 
+     * and also sets the new position of the input
+     * 
+     * @param x 
+     * @param y
+     */
+    setPos(x, y) { 
+        this.x = x;
+        this.y = y;
+        this.input.style.left = this.x.toString() + "px";
+        this.input.style.top = this.y.toString() + "px";
     }
 
     /**
      * Draws the rectangle representing the color
      */
     draw() {
-        fill(230);
-        rect(this.hueSld.x + this.satSld.getWidth() + this.margins, this.hueSld.y, this.width/2, this.height*3 + this.margins*2, this.width/10);
+        fill(this.highlighted ? 200 : 230);
+        rect(this.x, this.y, this.width, this.height, this.height/9);
+        // Draw the text
+        textAlign(CENTER);
+        textSize(this.height/2);
+        text(this.text, this.x + this.width/2, this.y - this.height/6);
 
-        colorMode(HSL, 1);
         fill(this.getColor());
-        rect(this.hueSld.x + this.satSld.getWidth() + this.margins + 2, this.hueSld.y + 2, this.width/2 - 4, this.height*3 + this.margins*2 - 4, this.width/10)
-
-        colorMode(RGB, 255);
+        rect(this.x + 3, this.y + 3, this.width - 6, this.height - 6, this.height/9);
     }
 
     /**
-     * @return an array containing the hsl values of the color
+     * @return the color choosen in this color picker
      */
     getColor() {
-        colorMode(HSL, 1);
-        return color(this.hueSld.value, this.satSld.value, this.ligSld.value);
+        return color(this.input.value);
+    }
+
+    /**
+     * @return The height of the element
+     */
+    getHeight() {
+        return this.text=="" ? this.height : this.height*1.5;
+    }
+
+    /**
+     * Checks if mouse is inside the button
+     * if so performs the action
+     */
+    clicked() {
+        if(this.mouseIsOver()) {
+            this.input.focus();
+            this.input.click();
+            if(this.action != null) this.action();
+        }
     }
 }

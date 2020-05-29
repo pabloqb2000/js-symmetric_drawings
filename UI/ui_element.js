@@ -23,7 +23,6 @@ class UiElement{
 
         this.highlighted = false;
         this.visible = visible;
-        this.forceDraw = false;
 
         UI.addElement(this);
     }
@@ -62,5 +61,16 @@ class UiElement{
      */
     mouseIsOver(){
         return mouseX >= this.x && mouseX <= this.x + this.width && mouseY >= this.y && mouseY <= this.y + this.height;
+    }
+
+    /**
+     * Sets the new position of the element 
+     * 
+     * @param x 
+     * @param y
+     */
+    setPos(x, y) {
+        this.x = x;
+        this.y = y;
     }
 }
