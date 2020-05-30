@@ -23,7 +23,7 @@ class Slider extends UiElement{
      */
     constructor(start=0, end=1, value=0.5, x=20, y=20, width=100, height=10, step=null, text="",
                 showVal=true, decimals=1, action=null){
-        super(x,y,width,height, true, true);
+        super(x,y,width,height, true, true, true);
 
         this.start = start;
         this.end = end;
@@ -84,7 +84,8 @@ class Slider extends UiElement{
      * Action performed when the slider is clicked
      */
     clicked() {
-        this.dragged();
+        if(this.mouseIsOver())
+            this.dragged();
     }
 
     /**
@@ -99,14 +100,23 @@ class Slider extends UiElement{
      * if so updates the slider
      */
     dragged(){
+        let oldValue = this.value;
+        this.value = (mouseX - this.x)/this.width * (this.end - this.start) + this.start;
+        this.value = max(this.start, min(this.value, this.end));
+        if(this.step != null) {
+            this.value = round(this.value / this.step)*this.step;
+        }
+        if(this.value != oldValue && this.action != null)
+            this.action();
+    }
+
+    /**
+     * Response to the mouseWheel event
+     */
+    wheel(event) {
         if(this.mouseIsOver()) {
-            let oldValue = this.value;
-            this.value = (mouseX - this.x)/this.width * (this.end - this.start) + this.start;
-            if(this.step != null) {
-                this.value = round(this.value / this.step)*this.step;
-            }
-            if(this.value != oldValue && this.action != null)
-                this.action();
+            this.value += event.delta/3000*(this.end - this.start);
+            this.value = max(this.start, min(this.end, this.value));
         }
     }
 }

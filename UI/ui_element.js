@@ -11,15 +11,17 @@ class UiElement{
      * @param height Height of the element
      * @param draggable True if the element should be updated on mouseDragged
      * @param clickable True if the element should be updated on mouseClicked
+     * @param wheelable True if the element should be updated on mouseWheel
      * @param visible Default visibility
      */
-    constructor(x, y, width, height, draggable, clickable, visible=true){
+    constructor(x, y, width, height, draggable, clickable, wheelable=false, visible=true){
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.draggable = draggable;
         this.clickable = clickable;
+        this.wheelable = wheelable;
 
         this.highlighted = false;
         this.visible = visible;
