@@ -34,6 +34,8 @@ class Slider extends UiElement{
         this.showVal = showVal;
         this.decimals = decimals;
         this.action = action;
+
+        this.wheelSensitivity = 1/3000;
     }
 
     /**
@@ -96,13 +98,15 @@ class Slider extends UiElement{
     }
 
     /**
-     * Checks if mouse is moving the slider
-     * if so updates the slider
+     * Changes the value to the given one
+     * Croping it to the start and end
+     * and rounding it if step != null 
+     * 
+     * @param v New value
      */
-    dragged(){
+    changeValue(v) {
         let oldValue = this.value;
-        this.value = (mouseX - this.x)/this.width * (this.end - this.start) + this.start;
-        this.value = max(this.start, min(this.value, this.end));
+        this.value = max(this.start, min(v, this.end));
         if(this.step != null) {
             this.value = round(this.value / this.step)*this.step;
         }
@@ -111,12 +115,19 @@ class Slider extends UiElement{
     }
 
     /**
+     * Updates the slider
+     */
+    dragged(){
+        this.changeValue((mouseX - this.x)/this.width * (this.end - this.start) + this.start);
+    }
+
+    /**
      * Response to the mouseWheel event
      */
     wheel(event) {
         if(this.mouseIsOver()) {
-            this.value += event.delta/3000*(this.end - this.start);
-            this.value = max(this.start, min(this.end, this.value));
+            this.changeValue(this.value + 
+                event.delta*this.wheelSensitivity*(this.end - this.start));
         }
     }
 }
