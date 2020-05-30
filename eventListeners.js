@@ -22,9 +22,9 @@ function mouseWheel(event) {
 	UI.mouseWheel(event);
 }
 
-// function keyPressed() {
-//   if(keyCode === 83){
-//
-//   }
-// }
+function keyPressed() {
+	if(keyCode === 82){ // R
+		clearFrame();
+	}
+}
 

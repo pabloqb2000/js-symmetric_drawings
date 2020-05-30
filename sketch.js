@@ -90,17 +90,3 @@ function clearFrame() {
 	background(32);
 	lastPoint = null;
 }
-
-function mouseDragged() {
-	UI.mouseDragged();
-}
-
-function mousePressed() {
-	UI.mouseClicked();
-}
-
-function keyPressed() {
-  if(keyCode === 82){ // R
-	clearFrame();
-  }
-}
