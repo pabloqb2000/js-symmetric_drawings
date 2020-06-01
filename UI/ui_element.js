@@ -14,7 +14,7 @@ class UiElement{
      * @param wheelable True if the element should be updated on mouseWheel
      * @param visible Default visibility
      */
-    constructor(x, y, width, height, draggable, clickable, wheelable=false, visible=true){
+    constructor(x, y, width, height, draggable, clickable, wheelable=false, popUpDraw=false, visible=true){
         this.x = x;
         this.y = y;
         this.width = width;
@@ -25,6 +25,7 @@ class UiElement{
 
         this.highlighted = false;
         this.visible = visible;
+        this.popUpDraw = popUpDraw;
 
         UI.addElement(this);
     }

@@ -77,6 +77,11 @@ class UI{
             if(e.visible)
                 e.draw();
         }
+        // After everything draw the popUps
+        for (let e of this.elements){
+            if(e.popUpDraw)
+                e.popUp();
+        }
     }
 
     /**
@@ -117,6 +122,16 @@ class UI{
      */
     static mouseClicked() {
         UI.selected = null;
+        // First click the popUps
+        for(let e of this.elements) {
+            if(e.popUpDraw) {
+                if(e.popUpClicked()){
+                    return;
+                }                
+            }
+        } 
+        
+        // Then click the elements
         for(let e of this.elements) {
             if(e.clickable)
                 e.clicked();
