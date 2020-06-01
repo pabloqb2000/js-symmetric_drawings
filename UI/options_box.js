@@ -19,6 +19,9 @@ class OptionsBox extends UiElement{
         this.opened;
     }
 
+    /**
+     * Draw the element
+     */
     draw() {
         // Draw rectangle
         noFill();
@@ -83,6 +86,9 @@ class OptionsBox extends UiElement{
         }
     }
 
+    /**
+     * Check if one option is clicked
+     */
     popUpClicked() {
         if(this.opened){
             let lastOpt = this.selected;
@@ -110,12 +116,26 @@ class OptionsBox extends UiElement{
      */
     wheel(event) {
         if(this.mouseIsOver()) {
-            let i = this.options.indexOf(this.selected);
+            let i = this.selectedIndex();
             let last_i = i;
             i += event.delta > 0 ? 1 : -1;
             i = max(0, min(i, this.options.length - 1));
             this.selected = this.options[i];
             if(this.onChange != null && i != last_i) this.onChange();
         }
+    }
+
+    /**
+     * @return the selected item
+     */
+    selectedItem() {
+        return this.selected;
+    }
+
+    /**
+     * @return the index of the selected item
+     */
+    selectedIndex() {
+        return this.options.indexOf(this.selected);
     }
 }
