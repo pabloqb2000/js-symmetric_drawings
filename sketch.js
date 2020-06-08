@@ -8,6 +8,7 @@ let clearBtn;
 let lastPoint;
 
 function setup() {
+	textFont("Sarpanch");
 	createCanvas(windowWidth, windowHeight);
 	background(32);
 
