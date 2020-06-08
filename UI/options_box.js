@@ -43,7 +43,7 @@ class OptionsBox extends UiElement{
 
         // Write text
         fill(this.highlighted ? 200 : 230);
-        textSize(this.height*0.6);
+        textSize(this.height*0.4);
         textAlign(CENTER, CENTER);
         text(this.selected, this.x + (this.width - this.height)/2 + 2, this.y + this.height/2);
         textAlign(LEFT, BASELINE);
@@ -71,7 +71,7 @@ class OptionsBox extends UiElement{
 
             // Write text
             noStroke();
-            textSize(this.height*0.6);
+            textSize(this.height*0.4);
             textAlign(CENTER, CENTER);
             for(let i = 1; i < this.options.length + 1; i++) {
                 if(mouseX >= this.x && mouseX <= this.x + this.width &&
